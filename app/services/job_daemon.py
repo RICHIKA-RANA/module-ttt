@@ -29,7 +29,7 @@ from datetime import datetime, timedelta, timezone
 from talkingdb.clients.sqlite import sqlite_conn
 from talkingdb.helpers import spool
 from talkingdb.logger.console import logger
-from talkingdb.models.job import store as job_store
+from talkingdb.helpers.job import store as job_store
 from talkingdb.models.job.error import JobErrorCode
 from talkingdb.models.job.state import JobState
 

@@ -22,7 +22,7 @@ from typing import Any, Dict, Optional
 
 from talkingdb.clients.sqlite import sqlite_conn
 from talkingdb.logger.console import logger
-from talkingdb.models.job import store as job_store
+from talkingdb.helpers.job import store as job_store
 from talkingdb.models.job.stage import JobStage
 
 from app.core import config

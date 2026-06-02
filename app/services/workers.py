@@ -1,6 +1,6 @@
 
 from talkingdb.models.graph.graph import GraphModel
-from talkingdb.models.job import store as job_store
+from talkingdb.helpers.job import store as job_store
 from talkingdb.clients.sqlite import sqlite_conn
 
 from app.services import job_daemon

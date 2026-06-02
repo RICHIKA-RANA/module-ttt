@@ -18,7 +18,7 @@ from talkingdb.logger.console import logger
 from talkingdb.models.document.document import DocumentModel
 from talkingdb.models.document.elements.primitive.table import TableModel
 from talkingdb.models.document.indexes.index import FileIndexModel
-from talkingdb.models.job import store as job_store
+from talkingdb.helpers.job import store as job_store
 from talkingdb.models.job.error import JobErrorCode
 from talkingdb.models.job.stage import JobStage
 from talkingdb.models.job.state import JobState

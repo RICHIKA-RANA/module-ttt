@@ -23,7 +23,7 @@ from talkingdb.helpers.validation import validate_file_type, validate_file_size
 from talkingdb.models.api.response import ErrorResponse
 from talkingdb.models.document.document import DocumentModel
 from talkingdb.models.document.indexes.index import FileIndexModel
-from talkingdb.models.job import store as job_store
+from talkingdb.helpers.job import store as job_store
 from talkingdb.models.job.job import JobModel
 from talkingdb.models.metadata.metadata import DEFAULT_METADATA, Metadata
 from talkingdb_ce.client import CEClient
