@@ -34,10 +34,10 @@ class JobStatusResponse(BaseModel):
         None,
         description=(
             "VALIDATING | PARSING | ELEMENT_EXTRACTION | TREE_GENERATION | "
-            "INDEXING | PERSISTING. Null on any terminal state."
+            "INDEXING | PERSISTING | DONE. Null on any terminal state."
         ),
     )
-    percent: Optional[int] = Field(
+    progress: Optional[int] = Field(
         None,
         description="0-100 once the work size is known; null = indeterminate.",
     )
@@ -46,6 +46,12 @@ class JobStatusResponse(BaseModel):
     )
     result_graph_id: Optional[str] = Field(
         None, description="Set only when state is COMPLETED"
+    )
+    file_name: Optional[str] = Field(
+    None, description="Original uploaded file name"
+    )
+    file_size: Optional[int] = Field(
+    None, description="Original uploaded file Size"
     )
     result_summary: Optional[Dict[str, Any]] = Field(
         None,
