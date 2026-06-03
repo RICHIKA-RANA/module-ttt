@@ -1,16 +1,18 @@
 from fastapi import FastAPI
-from app.api import root, index, documents, queries
-from app.services.workers import start_workers
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
-import threading
+
+from app.api import root, index, documents, jobs, queries
+from app.services import job_daemon
+from app.services.workers import init_database
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    threading.Thread(target=start_workers, daemon=True).start()
+    init_database()
+    job_daemon.start()
     yield
-    # Shutdown code can go here
+    job_daemon.stop()
 
 
 app = FastAPI(lifespan=lifespan, title="Module TalkingDB")
@@ -25,5 +27,6 @@ app.add_middleware(
 
 app.include_router(root.router)
 app.include_router(documents.router)
+app.include_router(jobs.router)
 app.include_router(queries.router)
 app.include_router(index.router)
