@@ -34,12 +34,12 @@ class JobStatusResponse(BaseModel):
         None,
         description=(
             "VALIDATING | PARSING | ELEMENT_EXTRACTION | TREE_GENERATION | "
-            "INDEXING | PERSISTING | DONE. Null on any terminal state."
+            "INDEXING | PERSISTING. Null on any terminal state."
         ),
     )
     progress: int = Field(
         None,
-        description="0-100 once the work size is known; null = indeterminate.",
+        description="0-100 once the work size is known, Reset to 0 in any terminal state",
     )
     status_message: Optional[str] = Field(
         None, description="Short, human-readable status text for UI display"
