@@ -1,6 +1,6 @@
 # About
 
-Module implementing TalkingDB's symbolic text to tree workflows.
+Module implementing TalkingDB's text to tree workflows.
 
 ## Code Contributor
 
