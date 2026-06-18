@@ -79,10 +79,10 @@ async def submit_document_job(
     description: Optional[str] = Form(
         None, description="Short curated description shown in demo listings"
     ),
-    suggested_queries: Optional[str] = Form(
+    suggested_queries: Optional[List[str]] = Form(
         None,
         description=(
-            "JSON array of up to 5 curated example queries for this document "
+            "Curated example queries for this document; add up to 5."
         ),
     ),
     api_key: str = Depends(verify_api_key),

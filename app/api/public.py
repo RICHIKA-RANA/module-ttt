@@ -4,6 +4,7 @@ from fastapi import APIRouter, Depends, Query
 
 from talkingdb.clients.sqlite import sqlite_conn
 from talkingdb.helpers.job import store as job_store
+from talkingdb.helpers.namespace import store as namespace_store
 
 from app.api.deps import require_public_namespace
 from app.model.namespaces import NamespaceDocumentResponse, NamespaceResponse
@@ -12,15 +13,15 @@ router = APIRouter(prefix="/public", tags=["Public"])
 
 
 @router.get(
-    "/namespaces/{namespace}",
-    response_model=NamespaceResponse,
-    summary="Get a public namespace",
+    "/namespaces",
+    response_model=List[NamespaceResponse],
+    summary="List public namespaces",
     description="Fetch a publicly readable namespace without authentication.",
 )
-async def get_public_namespace(
-    ns: Dict[str, Any] = Depends(require_public_namespace),
-) -> NamespaceResponse:
-    return NamespaceResponse(**ns)
+async def list_public_namespaces() -> List[NamespaceResponse]:
+    with sqlite_conn() as conn:
+        items = namespace_store.list_public_namespaces(conn)
+    return [NamespaceResponse(**ns) for ns in items]
 
 
 @router.get(

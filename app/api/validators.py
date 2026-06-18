@@ -1,4 +1,3 @@
-import json
 from typing import List, Optional
 
 from fastapi import HTTPException, status
@@ -24,30 +23,18 @@ def clean_optional_text(value: Optional[str]) -> Optional[str]:
     return value or None
 
 
-def parse_suggested_queries(raw: Optional[str]) -> Optional[List[str]]:
-    if raw is None or raw.strip() == "":
+def parse_suggested_queries(
+    values: Optional[List[str]],
+) -> Optional[List[str]]:
+    if not values:
         return None
 
-    try:
-        data = json.loads(raw)
-    except (ValueError, TypeError):
-        raise _unprocessable("suggested_queries must be a JSON array of strings")
+    cleaned = [text.strip() for text in values if text and text.strip()]
 
-    if not isinstance(data, list):
-        raise _unprocessable("suggested_queries must be a JSON array of strings")
-    if len(data) > config.MAX_SUGGESTED_QUERIES:
+    if len(cleaned) > config.MAX_SUGGESTED_QUERIES:
         raise _unprocessable(
             f"at most {config.MAX_SUGGESTED_QUERIES} suggested_queries are allowed"
         )
-
-    cleaned: List[str] = []
-    for item in data:
-        if not isinstance(item, str):
-            raise _unprocessable("each suggested query must be a string")
-        text = item.strip()
-        if not text:
-            raise _unprocessable("suggested queries must not be blank")
-        cleaned.append(text)
 
     return cleaned or None
 
