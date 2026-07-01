@@ -1,13 +1,10 @@
 
 from fastapi import APIRouter
 from fastapi.responses import HTMLResponse
-from talkingdb.models.document.document import DocumentModel
-from talkingdb.models.document.indexes.index import FileIndexModel
-from talkingdb.models.graph.graph import GraphModel
 from talkingdb.models.metadata.metadata import Metadata
 from app.services.indexer import IndexerService
+from app.services.graph import graph_or_404
 from app.services.graph_html import render_graph_html
-from talkingdb.clients.sqlite import sqlite_conn
 from app.model.index import IndexElementRequest
 router = APIRouter(prefix="/index", tags=["Indexer"])
 
@@ -28,9 +25,6 @@ async def parse_element(request: IndexElementRequest):
 
 @router.get("/html", response_class=HTMLResponse)
 async def view_graph(graph_id: str):
-
-    with sqlite_conn() as conn:
-        gm = GraphModel.load(conn, graph_id, True)
-
+    gm = graph_or_404(graph_id)
     html = render_graph_html(gm.g_json())
     return html
